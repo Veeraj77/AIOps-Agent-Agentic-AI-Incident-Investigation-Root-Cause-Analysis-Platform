@@ -1,0 +1,62 @@
+[
+  {
+    "id": "TC-01",
+    "name": "Database Connection Pool Exhaustion",
+    "category": "database",
+    "logs": "2024-01-15 10:30:15 WARNING DatabaseService - Connection pool usage at 80% (8/10 connections)\n2024-01-15 10:30:30 ERROR DatabaseService - Connection pool exhausted. No available connections.\n2024-01-15 10:30:30 ERROR OrderService - Failed to process order #45231: Database connection timeout after 30000ms\n2024-01-15 10:30:31 WARNING APIGateway - API response time exceeded 5000ms for /api/orders\n2024-01-15 10:30:32 ERROR HTTP 500 - /api/orders - Internal Server Error",
+    "expected_severity": "HIGH",
+    "expected_patterns": ["DB_CONNECTION_EXHAUSTION", "HTTP_5XX_ERRORS"],
+    "expected_services": ["databaseservice", "orderservice", "apigateway"],
+    "expected_root_cause_keywords": ["database", "connection", "pool", "exhausted", "timeout"]
+  },
+  {
+    "id": "TC-02",
+    "name": "Authentication and JWT Failure",
+    "category": "authentication",
+    "logs": "2024-01-16 14:15:00 WARNING AuthService - JWT token validation slower than expected: 450ms avg\n2024-01-16 14:16:00 ERROR AuthService - JWT secret key is invalid or expired\n2024-01-16 14:16:00 ERROR HTTP 401 - /api/auth/login - Unauthorized\n2024-01-16 14:16:01 ERROR HTTP 403 - /api/admin/users - Forbidden\n2024-01-16 14:16:02 ERROR AuthService - Authentication failed for user admin@example.com - invalid token\n2024-01-16 14:16:10 CRITICAL AuthService - All authentication requests failing - service degraded",
+    "expected_severity": "CRITICAL",
+    "expected_patterns": ["AUTH_FAILURE"],
+    "expected_services": ["authservice"],
+    "expected_root_cause_keywords": ["jwt", "token", "auth", "secret", "expired"]
+  },
+  {
+    "id": "TC-03",
+    "name": "HTTP 500 Internal Server Cascading Errors",
+    "category": "api",
+    "logs": "2024-02-10 09:00:01 ERROR HTTP 500 - /api/v1/checkout - Internal Server Error\n2024-02-10 09:00:02 ERROR PaymentGateway - HTTP 502 Bad Gateway while communicating with bank partner\n2024-02-10 09:00:03 ERROR OrderService - HTTP 500 - /api/orders - Failed to persist order transaction\n2024-02-10 09:00:04 ERROR NotificationService - HTTP 503 Service Unavailable - downstream queue full",
+    "expected_severity": "HIGH",
+    "expected_patterns": ["HTTP_5XX_ERRORS"],
+    "expected_services": ["paymentgateway", "orderservice", "notificationservice"],
+    "expected_root_cause_keywords": ["500", "gateway", "downstream", "service", "unavailable"]
+  },
+  {
+    "id": "TC-04",
+    "name": "API Latency and Timeout Degradation",
+    "category": "performance",
+    "logs": "2024-03-01 12:00:10 WARNING Gateway - API response time exceeded 5000ms for /api/search\n2024-03-01 12:00:15 WARNING Gateway - Response time 7500ms exceeded threshold on /api/inventory\n2024-03-01 12:00:20 ERROR Gateway - Request timeout 504 Gateway Timeout on /api/search\n2024-03-01 12:00:25 INFO Gateway - Request load 1200 req/sec",
+    "expected_severity": "MEDIUM",
+    "expected_patterns": ["API_SLOW_RESPONSE"],
+    "expected_services": ["gateway"],
+    "expected_root_cause_keywords": ["timeout", "latency", "response", "slow", "gateway"]
+  },
+  {
+    "id": "TC-05",
+    "name": "Java Heap Space Out of Memory",
+    "category": "memory",
+    "logs": "2024-04-05 16:20:00 WARNING WorkerNode - Heap usage above 88%\n2024-04-05 16:21:00 ERROR WorkerNode - java.lang.OutOfMemoryError: Java heap space\n2024-04-05 16:21:02 CRITICAL WorkerNode - Garbage collection overhead limit exceeded\n2024-04-05 16:21:05 ERROR WorkerNode - Process crashed due to memory exhaustion",
+    "expected_severity": "CRITICAL",
+    "expected_patterns": ["MEMORY_PRESSURE"],
+    "expected_services": ["workernode"],
+    "expected_root_cause_keywords": ["memory", "heap", "outofmemory", "gc", "exhaustion"]
+  },
+  {
+    "id": "TC-06",
+    "name": "Healthy Application Normal Operations",
+    "category": "clean",
+    "logs": "2024-05-12 08:00:00 INFO App - Service started on port 3000\n2024-05-12 08:00:01 INFO Database - Connected to PostgreSQL primary\n2024-05-12 08:01:00 INFO Health - GET /health HTTP 200 OK - 12ms\n2024-05-12 08:02:00 INFO Metrics - All service SLOs healthy at 99.99%",
+    "expected_severity": "INFO",
+    "expected_patterns": [],
+    "expected_services": ["app", "database", "health", "metrics"],
+    "expected_root_cause_keywords": []
+  }
+]

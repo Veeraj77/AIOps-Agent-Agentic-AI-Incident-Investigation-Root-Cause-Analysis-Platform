@@ -1,0 +1,14 @@
+2024-01-16 14:10:00 INFO AuthService - User authentication service started
+2024-01-16 14:10:30 INFO APIGateway - Healthy - serving 95 req/min
+2024-01-16 14:15:00 WARNING AuthService - JWT token validation slower than expected: 450ms avg
+2024-01-16 14:16:00 ERROR AuthService - JWT secret key is invalid or expired
+2024-01-16 14:16:00 ERROR HTTP 401 - /api/auth/login - Unauthorized
+2024-01-16 14:16:01 ERROR HTTP 401 - /api/auth/refresh - Unauthorized
+2024-01-16 14:16:01 ERROR HTTP 403 - /api/admin/users - Forbidden
+2024-01-16 14:16:02 ERROR AuthService - Authentication failed for user admin@example.com - invalid token
+2024-01-16 14:16:02 ERROR AuthService - Authentication failed for user user123@example.com - invalid token
+2024-01-16 14:16:03 WARNING SecurityService - Multiple authentication failures detected - possible attack
+2024-01-16 14:16:04 ERROR HTTP 401 - /api/orders - Unauthorized
+2024-01-16 14:16:05 ERROR HTTP 401 - /api/products - Unauthorized
+2024-01-16 14:16:10 CRITICAL AuthService - All authentication requests failing - service degraded
+2024-01-16 14:16:11 ERROR UserService - Cannot verify user session - auth service unavailable

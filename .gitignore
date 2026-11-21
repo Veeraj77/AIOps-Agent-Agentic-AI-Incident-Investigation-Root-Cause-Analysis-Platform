@@ -1,0 +1,59 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments & Keys (NEVER commit secrets!)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+!.env.example
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Database & Persistent Vector Storage
+*.sqlite
+*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+backend/storage/
+storage/
+storage/chroma_db/
+storage/uploads/
+!storage/.gitkeep
+!storage/uploads/.gitkeep
+!storage/chroma_db/.gitkeep
+
+# Node.js
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+evaluation/evaluation_report.json
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# General Logs (allow sample test data)
+*.log
+!data/sample_logs/*.log
+!data/**/*.log
